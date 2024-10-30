@@ -1,3 +1,7 @@
+import tkinter as tk
+from tkinter import messagebox
+#import matplotlib.pyplot as plt
+
 from collections import deque
 
 class Grafo:
@@ -116,6 +120,29 @@ meu_grafo = {
 
 grafo = Grafo(meu_grafo)
 
+def produtos_digitados():
+    # Pega os produtos digitados
+    products = entry.get()  
+
+    # separa por virgula
+    product_list = [p.strip() for p in products.split(",")]
+
+    print("Produtos digitados:", product_list)
+
 #grafo.mostra_grafo()
 
-print(grafo.busca_largura(1,60))
+#print(grafo.busca_largura(1,60))
+
+rota = tk.Tk()
+rota.title("Mapa do supermercado")
+
+titulo = tk.Label(rota, text="Qual produtos você deseja comprar separedos por vírgula?")
+titulo.pack(pady=10)
+
+entry = tk.Entry(rota, width=50)
+entry.pack(pady=5)
+
+
+botao = tk.Button(rota, text="Enviar", command=produtos_digitados)
+botao.pack(pady=10)
+rota.mainloop()
