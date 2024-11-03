@@ -40,6 +40,21 @@ class Grafo:
 
 
 
+def menor_caminho (arvore):
+    inicio = arvore[0][0]
+    fim = arvore[-1][-1]
+    #print(inicio)
+    #print(fim)
+    nova_arvore = []
+    arvore.reverse()
+    #print(arvore)
+    for no in arvore:
+        if (no[0] == inicio and no[1] == fim):
+            nova_arvore.append(no)
+            return nova_arvore
+        elif no[1] == fim:
+            fim = no[0]
+            nova_arvore.append(no)
 
 meu_grafo = {
     1:[2,3],
@@ -131,12 +146,17 @@ def produtos_digitados():
 
 #grafo.mostra_grafo()
 
-#print(grafo.busca_largura(1,60))
+arvore_resposta = grafo.busca_largura(1,60)
+
+x=menor_caminho(arvore_resposta)
+
+print(x)
+
 
 rota = tk.Tk()
 rota.title("Mapa do supermercado")
 
-titulo = tk.Label(rota, text="Qual produtos você deseja comprar separedos por vírgula?")
+titulo = tk.Label(rota, text="Liste os produtos que você deseja comprar, separados por vírgula e sem espaços.")
 titulo.pack(pady=10)
 
 entry = tk.Entry(rota, width=50)
