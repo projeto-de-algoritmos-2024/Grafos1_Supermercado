@@ -1,8 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox
+import lista_de_produtos
 #import matplotlib.pyplot as plt
 
 from collections import deque
+
+
 
 class Grafo:
 
@@ -135,26 +138,65 @@ meu_grafo = {
 
 grafo = Grafo(meu_grafo)
 
-def produtos_digitados():
-    # Pega os produtos digitados
-    products = entry.get()  
-
+def manipula_lista_compras(lista_produtos):
+    
+    lista_de_compras_grafo = []
     # separa por virgula
-    product_list = [p.strip() for p in products.split(",")]
+    lista_compras = [p.strip() for p in lista_produtos.split(",")]
 
-    print("Produtos digitados:", product_list)
+    print("Produtos digitados:", lista_compras)
+
+    for produto in lista_compras:
+        for meu_produto in lista_de_produtos.meus_produtos:
+            if lista_de_produtos.meus_produtos[meu_produto] == produto:
+                lista_de_compras_grafo.append(meu_produto)
+   
+            #print(meu_produto) # chave
+            #print(lista_de_produtos.meus_produtos[meu_produto]) # valor
+    #print(lista_de_compras_grafo)
+    return lista_de_compras_grafo
+
+
+
+def gerenciador():
+    # Pega os produtos digitados
+    produtos_da_lista = entry.get()  
+    
+    lista_grafo = manipula_lista_compras(produtos_da_lista)
+    lista_grafo.append(60)
+
+    comeco = 1
+    for produto in lista_grafo:
+        x = grafo.busca_largura(comeco, produto)
+        comeco = produto
+        y = menor_caminho(x)
+        y.reverse()
+        print(y)
+    
+    
+
+    
+            
 
 #grafo.mostra_grafo()
 
-arvore_resposta = grafo.busca_largura(1,60)
+# arvore_resposta = grafo.busca_largura(1,60)
 
-x=menor_caminho(arvore_resposta)
+# x=menor_caminho(arvore_resposta)
 
-print(x)
+# print(x)
 
+print(lista_de_produtos.meus_produtos)
 
 rota = tk.Tk()
 rota.title("Mapa do supermercado")
+
+produtos_aceitos = tk.Label(
+    rota,
+    text="Bem-vindo ao supermercado Boa Compra! Vendemos os seguintes produtos:\n\n - ades - coca-cola - guarana - fanta - pepsi - leite - redbull - monster - tnt - kuat - guarana jesus - suco de uva integral - arroz - feijao - \nmacarrao - farinha - acucar - sal - miojo - cafe - biscoito - salgadinho - chocolate - bombom - alface - tomate - abobora - batata - pimenta - pepino - chuchu - jilo - cebola -\n alho - maca - banana - morango - uva - abacaxi - goiaba - pera - melancia - mamao - melao - limao - brocolis - cenoura - abobrinha - nugget - \npizza - hamburguer - frango - porco - picanha - costela - contra-file - queijo - iogurte - escova de dentes - pasta de dente - detergente - agua sanitaria - \nfio dental - sabonete - shampoo - condicionador - esponja - sabao em po - amaciante - desinfetante - papel higienico - lenco umedecido"
+)
+
+produtos_aceitos.pack(pady=10)
 
 titulo = tk.Label(rota, text="Liste os produtos que você deseja comprar, separados por vírgula e sem espaços.")
 titulo.pack(pady=10)
@@ -163,6 +205,8 @@ entry = tk.Entry(rota, width=50)
 entry.pack(pady=5)
 
 
-botao = tk.Button(rota, text="Enviar", command=produtos_digitados)
+botao = tk.Button(rota, text="Enviar", command=gerenciador)
 botao.pack(pady=10)
+
 rota.mainloop()
+
