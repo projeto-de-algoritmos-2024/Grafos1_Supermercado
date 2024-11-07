@@ -136,6 +136,83 @@ meu_grafo = {
     74:[63,73]
 }
 
+coordenadas_grafo={
+    1:(50,75),
+    2:(100,100),
+    3:(100,50),
+    4:(150,50),
+    5:(200,50),
+    6:(250,50),
+    7:(300,50),
+    8:(350,50),
+    9:(400,50),
+    10:(450,50),
+    11:(500,50),
+    12:(550,50),
+    13:(600,50),
+    14: (150, 100),
+    15: (200, 100),
+    16: (250, 100),
+    17: (300, 100),
+    18: (350, 100),
+    19: (400, 100),
+    20: (450, 100),
+    21: (500, 100),
+    22: (550, 100),
+    23: (600, 100),
+    24:(650,100),
+    25:(650,50),
+    26: (600, 150),
+    27: (550, 150),
+    28: (500, 150),
+    29: (450, 150),
+    30: (400, 150),
+    31: (350, 150),
+    32: (300, 150),
+    33: (250, 150),
+    34: (200, 150),
+    35: (150, 150),
+    36:(100, 200),
+    37:(100, 150),
+    38:(650, 200),
+    39:(650,150),
+    40: (150, 200),
+    41: (200, 200),
+    42: (250, 200),
+    43: (300, 200),
+    44: (350, 200),
+    45: (400, 200),
+    46: (450, 200),
+    47: (500, 200),
+    48: (550, 200),
+    49: (600, 200),
+    50: (150, 250),
+    51: (200, 250),
+    52: (250, 250),
+    53: (300, 250),
+    54: (350, 250),
+    55: (400, 250),
+    56: (450, 250),
+    57: (500, 250),
+    58: (550, 250),
+    59: (600, 250),
+    60:(50,275),
+    61:(650, 300),
+    62:(650, 250),
+    63:(100, 300),
+    64:(100, 250),
+    65: (600, 300),
+    66: (550, 300),
+    67: (500, 300),
+    68: (450, 300),
+    69: (400, 300),
+    70: (350, 300),
+    71: (300, 300),
+    72: (250, 300),
+    73: (200, 300),
+    74: (150, 300)
+}
+
 grafo = Grafo(meu_grafo)
 
 def manipula_lista_compras(lista_produtos):
@@ -156,14 +233,25 @@ def manipula_lista_compras(lista_produtos):
     #print(lista_de_compras_grafo)
     return lista_de_compras_grafo
 
-
+def desenha_caminho(caminho):
+    #pinta os nos que estão no caminho de vermelho e os que não estão de cinza
+    for node, (x, y) in coordenadas_grafo.items():
+        color = "red" if node in caminho else "gray"
+        canvas.create_oval(x-10, y-10, x+10, y+10, fill=color)
+        canvas.create_text(x, y, text=str(node), fill="white")
+    for node, neighbors in meu_grafo.items():
+        x1, y1 = coordenadas_grafo[node]
+        for neighbor in neighbors:
+            x2, y2 = coordenadas_grafo[neighbor]
+            canvas.create_line(x1, y1, x2, y2, fill="black", width=1)
 
 def gerenciador():
     # Pega os produtos digitados
-    produtos_da_lista = entry.get()  
+    produtos_da_lista = entrada.get()  
     
     lista_grafo = manipula_lista_compras(produtos_da_lista)
     lista_grafo.append(60)
+    caminho = []
 
     comeco = 1
     for produto in lista_grafo:
@@ -171,12 +259,19 @@ def gerenciador():
         comeco = produto
         y = menor_caminho(x)
         y.reverse()
-        print(y)
-    
-    
+        caminho.append(y)
 
-    
-            
+    # Transformando a lista de listas de tuplas em uma lista única de elementos
+    lista_unica = [elemento for sub_caminho in caminho for tupla in sub_caminho for elemento in tupla]
+
+    # Removendo duplicados consecutivos
+    caminho_final = [lista_unica[0]]
+    for item in lista_unica[1:]:
+        if item != caminho_final[-1]:
+            caminho_final.append(item)
+
+    print(caminho_final)
+    desenha_caminho(caminho_final)
 
 #grafo.mostra_grafo()
 
@@ -186,7 +281,7 @@ def gerenciador():
 
 # print(x)
 
-print(lista_de_produtos.meus_produtos)
+#print(lista_de_produtos.meus_produtos)
 
 rota = tk.Tk()
 rota.title("Mapa do supermercado")
@@ -201,12 +296,15 @@ produtos_aceitos.pack(pady=10)
 titulo = tk.Label(rota, text="Liste os produtos que você deseja comprar, separados por vírgula e sem espaços.")
 titulo.pack(pady=10)
 
-entry = tk.Entry(rota, width=50)
-entry.pack(pady=5)
+entrada = tk.Entry(rota, width=50)
+entrada.pack(pady=5)
 
 
 botao = tk.Button(rota, text="Enviar", command=gerenciador)
 botao.pack(pady=10)
+
+canvas = tk.Canvas(rota, width=700, height=700, bg="white")
+canvas.pack()
 
 rota.mainloop()
 
