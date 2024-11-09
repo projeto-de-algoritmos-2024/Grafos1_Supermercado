@@ -223,20 +223,32 @@ def manipula_lista_compras(lista_produtos):
 
     print("Produtos digitados:", lista_compras)
 
+    legenda = ["1 - entrada"]
+
     for produto in lista_compras:
         for meu_produto in lista_de_produtos.meus_produtos:
             if lista_de_produtos.meus_produtos[meu_produto] == produto:
                 lista_de_compras_grafo.append(meu_produto)
-   
+                aux = str(meu_produto) + " - " + produto
+                legenda.append(aux)
+    
+
+    legenda.append("60 - saída")
             #print(meu_produto) # chave
             #print(lista_de_produtos.meus_produtos[meu_produto]) # valor
-    #print(lista_de_compras_grafo)
+    coordenadas_caminho.config(text = legenda)
+    print(lista_de_compras_grafo)
     return lista_de_compras_grafo
 
-def desenha_caminho(caminho):
+def desenha_caminho(caminho, produtos):
     #pinta os nos que estão no caminho de vermelho e os que não estão de cinza
     for node, (x, y) in coordenadas_grafo.items():
-        color = "red" if node in caminho else "gray"
+        if node in produtos:
+            color = "green"
+        elif node in caminho:
+            color = "red"
+        else: 
+            color = "grey"
         canvas.create_oval(x-10, y-10, x+10, y+10, fill=color)
         canvas.create_text(x, y, text=str(node), fill="white")
     for node, neighbors in meu_grafo.items():
@@ -269,19 +281,12 @@ def gerenciador():
     for item in lista_unica[1:]:
         if item != caminho_final[-1]:
             caminho_final.append(item)
+            
 
     print(caminho_final)
-    desenha_caminho(caminho_final)
-
-#grafo.mostra_grafo()
-
-# arvore_resposta = grafo.busca_largura(1,60)
-
-# x=menor_caminho(arvore_resposta)
-
-# print(x)
-
-#print(lista_de_produtos.meus_produtos)
+    print(lista_grafo)
+    
+    desenha_caminho(caminho_final, lista_grafo)
 
 rota = tk.Tk()
 rota.title("Mapa do supermercado")
@@ -299,11 +304,13 @@ titulo.pack(pady=10)
 entrada = tk.Entry(rota, width=50)
 entrada.pack(pady=5)
 
-
 botao = tk.Button(rota, text="Enviar", command=gerenciador)
 botao.pack(pady=10)
 
-canvas = tk.Canvas(rota, width=700, height=700, bg="white")
+coordenadas_caminho = tk.Label(rota, text="")
+coordenadas_caminho.pack(pady=10)
+
+canvas = tk.Canvas(rota, width=700, height=400, bg="white")
 canvas.pack()
 
 rota.mainloop()
