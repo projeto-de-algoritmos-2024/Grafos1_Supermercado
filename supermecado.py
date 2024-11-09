@@ -34,7 +34,7 @@ def manipula_lista_compras(lista_produtos):
                 aux = str(meu_produto) + " - " + produto
                 legenda.append(aux)
     
-    legenda.append("60 - saída")
+    legenda.append("60 - caixa")
     coordenadas_caminho.config(text = legenda)
     print(lista_de_compras_grafo)
     return lista_de_compras_grafo
