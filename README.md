@@ -14,9 +14,9 @@ Este programa foi desenvolvido como parte de um projeto de Algoritmos e tem como
 
 ## Screenshots
 
-![imagem 1](imgs\interface1.jpg)
-![imagem 2](imgs\interface2.jpg)
-![imagem 3](imgs\interface3.jpg)
+![imagem 1](imgs/interface1.jpg)
+![imagem 2](imgs/interface2.jpg)
+![imagem 3](imgs/interface3.jpg)
 
 
 ## Instalação 
