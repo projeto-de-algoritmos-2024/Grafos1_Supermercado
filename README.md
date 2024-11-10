@@ -50,5 +50,7 @@ Para sair do programa, basta apertar o x no canto superior direito da interface.
 
 ## Apresentação
 
+Clique na thumbnail abaixo para acessar o vídeo no YouTube.
+
 [![Watch the video](https://img.youtube.com/vi/2V84rKEOg68/0.jpg)](https://www.youtube.com/watch?v=2V84rKEOg68)
 
