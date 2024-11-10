@@ -48,3 +48,7 @@ Para sair do programa, basta apertar o x no canto superior direito da interface.
 - O menor caminho calculado pelo programa não é o menor caminho possível: o menor caminho possível entre vários nós é um problema de complexidade n!, o que, com a quantidade de nós contidos no grafo do programa (74), faria com que o programa não rodasse em tempo hábil. Por isso, o menor caminho calculado leva em consideração a ordem dos produtos digitados.
 - Caso você digite um produto que não exista no supermercado ou com grafia diferente da listada, o programa ignorará essa entrada. Lembre-se de usar vírgular para separar os produtos e não utilize espaços entre as vírgulas e os produtos.
 
+## Apresentação
+
+[![Watch the video](https://img.youtube.com/vi/2V84rKEOg68/0.jpg)](https://www.youtube.com/watch?v=2V84rKEOg68)
+
